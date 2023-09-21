@@ -1,11 +1,11 @@
 {
-    "name": "edu_pulse",
-    "short_name": "edu_pulse",
+    "name": "demo",
+    "short_name": "demo",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "Student survey app, with a dashboard for analytics.",
+    "description": "A new Flutter project.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

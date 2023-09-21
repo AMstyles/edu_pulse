@@ -1,6 +1,6 @@
-# edu_pulse
+# demo
 
-Student survey app, with a dashboard for analytics.
+A new Flutter project.
 
 ## Getting Started
 
