@@ -1,0 +1,1 @@
+ C:\\Users\\DELL\ 5590\\Documents\\GitHub\\edu_pulse\\.dart_tool\\flutter_build\\3f4f67a2620b08717330128e71e3b4a0\\native_assets.yaml: 
