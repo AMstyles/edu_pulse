@@ -1,4 +1,10 @@
-#Wed Oct 04 14:34:22 CAT 2023
-base.0=C\:\\Users\\DELL 5590\\Documents\\GitHub\\edu_pulse\\build\\app\\intermediates\\dex\\debug\\mergeDexDebug\\classes.dex
-renamed.0=classes.dex
+#Thu Nov 16 00:47:59 SAST 2023
+base.0=/Users/admin/FlutterProjects/edu_pulse/build/app/intermediates/dex/debug/mergeDexDebug/classes.dex
+base.1=/Users/admin/FlutterProjects/edu_pulse/build/app/intermediates/dex/debug/mergeDexDebug/classes2.dex
+base.2=/Users/admin/FlutterProjects/edu_pulse/build/app/intermediates/dex/debug/mergeDexDebug/classes3.dex
 path.0=classes.dex
+path.1=classes2.dex
+path.2=classes3.dex
+renamed.0=classes.dex
+renamed.1=classes2.dex
+renamed.2=classes3.dex

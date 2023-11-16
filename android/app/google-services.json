@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1054026378414",
+    "project_id": "edu-pulse-e9aeb",
+    "storage_bucket": "edu-pulse-e9aeb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1054026378414:android:6f8fe466b6d3ff723f913f",
+        "android_client_info": {
+          "package_name": "com.techtitans.edu_pulse"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCh-94CPmTqZ32jrXVzxB34fZ8gBi7NOEY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

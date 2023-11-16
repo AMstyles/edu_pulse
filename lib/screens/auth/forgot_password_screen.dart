@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class ForgotPassWord extends StatelessWidget {
-  const ForgotPassWord({Key? key});
+  const ForgotPassWord({super.key, });
 
   @override
   Widget build(BuildContext context) {
@@ -51,11 +51,11 @@ class ForgotPassWord extends StatelessWidget {
                           topLeft: Radius.circular(60),
                           topRight: Radius.circular(60))),
                   child: Padding(
-                    padding: EdgeInsets.all(20),
+                    padding: const EdgeInsets.all(20),
                     child: Column(children: <Widget>[
-                      SizedBox(height: 40),
+                      const SizedBox(height: 40),
                       Container(
-                        padding: EdgeInsets.all(20),
+                        padding: const EdgeInsets.all(20),
                         decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(10),
@@ -103,7 +103,7 @@ class ForgotPassWord extends StatelessWidget {
                       ),
                       Container(
                         height: 50,
-                        margin: EdgeInsets.symmetric(horizontal: 50),
+                        margin: const EdgeInsets.symmetric(horizontal: 50),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(50),
                           gradient: LinearGradient(colors: [

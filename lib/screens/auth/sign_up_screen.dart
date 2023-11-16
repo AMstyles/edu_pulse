@@ -1,47 +1,100 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
-class SignUPPage extends StatelessWidget {
-  const SignUPPage({Key? key});
+import '../../firebase/auth/auth.dart';
+import '../../firebase/data/data.dart';
+import '../../models/local_user.dart';
+import '../../services/local_storage_services.dart';
+import '../../services/local_user_provider.dart';
+import '../home_screen.dart';
+
+class SignUPPage extends StatefulWidget {
+  const SignUPPage({super.key,});
+
+  @override
+  State<SignUPPage> createState() => _SignUpPageState();
+
+}
+
+class _SignUpPageState extends State<SignUPPage> {
+
+  final _formKey = GlobalKey<FormState>();
+  final _nameFieldKey = GlobalKey<FormFieldState>();
+  final _emailFieldKey = GlobalKey<FormFieldState>();
+  final _passwordFieldKey = GlobalKey<FormFieldState>();
+  final _confirmPasswordFieldKey = GlobalKey<FormFieldState>();
+  final _choiceFieldKey = GlobalKey<FormFieldState>();
+
+  String? userType;
+
+  late TextEditingController _nameController;
+  late TextEditingController _emailController;
+  late TextEditingController _passwordController;
+  late TextEditingController _confirmPasswordController;
+
+  final enBorder = const OutlineInputBorder(
+  borderRadius:
+  BorderRadius.all(Radius.circular(10)),
+  borderSide: BorderSide(color: Colors.amber),
+  );
+
+  final myBorder = const OutlineInputBorder(
+  borderRadius: BorderRadius.all(
+  Radius.circular(10)),
+
+
+
+  );
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _nameController = TextEditingController();
+    _emailController = TextEditingController();
+    _passwordController = TextEditingController();
+    _confirmPasswordController = TextEditingController();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        backgroundColor: Colors.white,
-        body: Container(
-          width: double.infinity,
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              colors: [
-                Colors.orange[900]!,
-                Colors.orange[800]!,
-                Colors.orange[300]!,
-              ],
-            ),
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: Container(
+        width: double.infinity,
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            colors: [
+              Colors.orange[900]!,
+              Colors.orange[800]!,
+              Colors.orange[300]!,
+            ],
           ),
+        ),
+        child: Form(
+          key: _formKey,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               const SizedBox(
                 height: 40,
               ),
-              const Padding(
-                padding: EdgeInsets.all(10),
+              Padding(
+                padding: const EdgeInsets.all(10),
                 child: Column(
                   children: <Widget>[
                     Text(
                       "Let`s get you started!",
-                      style: TextStyle(color: Colors.white, fontSize: 30),
+                      style: GoogleFonts.abel(color: Colors.white,
+                          fontSize: 30,
+                          fontWeight: FontWeight.bold),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
-                    // Text(
-                    //   "Unlocking Student Insights",
-                    //   style: TextStyle(color: Colors.white, fontSize: 20),
-                    // )
+
                   ],
                 ),
               ),
@@ -64,130 +117,182 @@ class SignUPPage extends StatelessWidget {
                         const SizedBox(
                           height: 6,
                         ),
-                        Container(
-                          margin: const EdgeInsets.all(10),
-                          child: const TextField(
+
+                        Padding(padding: const EdgeInsets.all(10),
+                          child: TextFormField(
                             keyboardType: TextInputType.name,
-                            decoration: InputDecoration(
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10)),
-                                borderSide: BorderSide(color: Colors.amber),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10)),
-                                borderSide: BorderSide(color: Colors.amber),
-                              ),
-                              labelText: 'Name',
+                            key: _nameFieldKey,
+                            onChanged: (value) {
+                              setState(() {
+                                _nameController.text = value;
+                              });
+                            },
+                            onEditingComplete: () {
+                              if (_nameFieldKey.currentState!.validate()) {
+                                FocusScope.of(context).nextFocus();
+                              }
+                            },
+                            decoration:  InputDecoration(
+                              focusColor: Colors.amber,
+                              hoverColor: Colors.amber,
+                              border: myBorder,
+                              enabledBorder: enBorder,
+                              labelText: 'Full names',
                             ),
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please enter your name';
+                              }
+                              return null;
+                            },
                           ),
                         ),
+
                         const SizedBox(
                           height: 7,
                         ),
-                        Container(
-                          margin: const EdgeInsets.all(10),
-                          child: const TextField(
+                        Padding(
+                          padding: const EdgeInsets.all(10),
+                          child: TextFormField(
                             keyboardType: TextInputType.emailAddress,
-                            decoration: InputDecoration(
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10)),
-                                borderSide: BorderSide(color: Colors.amber),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10)),
-                                borderSide: BorderSide(color: Colors.amber),
-                              ),
+                            textInputAction: TextInputAction.next,
+                            onEditingComplete: () {
+                              if (_emailFieldKey.currentState!.validate()) {
+                                FocusScope.of(context).nextFocus();
+                              }
+                            },
+                            key: _emailFieldKey,
+                            onChanged: (value) {
+                              setState(() {
+                                _emailController.text = value;
+                              });
+                            },
+
+                            decoration:InputDecoration(
+                              focusColor: Colors.amber,
+                              hoverColor: Colors.amber,
+                              border: myBorder,
+                              enabledBorder: enBorder,
                               labelText: 'Email',
                             ),
+                            validator: (value) {
+                              if (value == null ||
+                                  value.isEmpty ||
+                                  !value.contains('@')) {
+                                return 'Please enter a valid email';
+                              }
+                              return null;
+                            },
                           ),
                         ),
                         const SizedBox(
                           height: 7,
                         ),
-                        Container(
-                          margin: const EdgeInsets.all(10),
-                          child: const TextField(
-                            obscureText: true,
-                            decoration: InputDecoration(
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10)),
-                                borderSide: BorderSide(color: Colors.amber),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10)),
-                                borderSide: BorderSide(color: Colors.amber),
-                              ),
-                              labelText: 'Password',
-                            ),
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 7,
-                        ),
-                        Container(
-                          margin: const EdgeInsets.all(10),
-                          child: const TextField(
-                            obscureText: true,
-                            decoration: InputDecoration(
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10)),
-                                borderSide: BorderSide(color: Colors.amber),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10)),
-                                borderSide: BorderSide(color: Colors.amber),
-                              ),
-                              labelText: 'Confirm Password',
-                            ),
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 7,
-                        ),
-                        Container(
+                        Padding(
                           padding: const EdgeInsets.all(10),
-                          child: InputDecorator(
+                          child: TextFormField(
+                            key: _passwordFieldKey,
+                            onChanged: (value) {
+                              setState(() {
+                                _passwordController.text = value;
+                              });
+                            },
+                            obscureText: true,
+                            onEditingComplete: () {
+                              if (_passwordFieldKey.currentState!.validate()) {
+                                FocusScope.of(context).nextFocus();
+                              }
+                            },
+                            keyboardType: TextInputType.visiblePassword,
+                            textInputAction: TextInputAction.next,
+                            onFieldSubmitted: (value) {
+                              if (_passwordFieldKey.currentState!.validate()) {
+                                FocusScope.of(context).nextFocus();
+                              }
+                            },
                             decoration: InputDecoration(
-                              labelText: 'Choose User Type',
-                              border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(15.0)),
+                              focusColor: Colors.amber,
+                              hoverColor: Colors.amber,
+                              border: myBorder,
+                              enabledBorder: enBorder,
+                              labelText: 'password',
                             ),
+                            validator: (value) {
+                              if (value == null || value.isEmpty ||
+                                  value.length < 6) {
+                                return 'password must be at least 6 characters long';
+                              }
+                              return null;
+                            },
                           ),
                         ),
-                        Container(
+                        const SizedBox(
+                          height: 7,
+                        ),
+                        Padding(
                           padding: const EdgeInsets.all(10),
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            gradient: LinearGradient(colors: [
-                              Colors.orange[900]!,
-                              Colors.orange[800]!,
-                              Colors.orange[300]!,
-                            ]),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.amber.withOpacity(0.5),
-                                spreadRadius: 3,
-                                blurRadius: 7,
-                                offset: const Offset(0, 3),
-                              )
-                            ],
+                          child: TextFormField(
+                            key: _confirmPasswordFieldKey,
+                            onChanged: (value) {
+                              setState(() {
+                                _confirmPasswordController.text = value;
+                              });
+                              _confirmPasswordFieldKey.currentState!.validate();
+                            },
+                            decoration: InputDecoration(
+                              focusColor: Colors.amber,
+                              hoverColor: Colors.amber,
+                              border: myBorder,
+                              enabledBorder: enBorder,
+                              labelText: 'confirm password',
+                            ),
+                            validator: (value) {
+                              if (value != _passwordController.text) {
+                                return 'passwords do not match';
+                              }
+                              return null;
+                            },
                           ),
-                          margin: const EdgeInsets.all(10),
-                          child: const Text(
-                            'Signup',
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
+                        ),
+                        const SizedBox(
+                          height: 7,
+                        ),
+                        _buildChoiceUser(),
+                        const SizedBox(
+                          height: 7,
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            _formKey.currentState!.validate()? submit(): null;
+                          },
+                          child:
+                          Container(
+                            padding: const EdgeInsets.all(10),
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              gradient: LinearGradient(colors: [
+                                Colors.orange[900]!,
+                                Colors.orange[800]!,
+                                Colors.orange[300]!,
+                              ]),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.amber.withOpacity(0.5),
+                                  spreadRadius: 3,
+                                  blurRadius: 7,
+                                  offset: const Offset(0, 3),
+                                )
+                              ],
+                            ),
+                            margin: const EdgeInsets.all(10),
+                            child: const Text(
+                              'Signup',
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                              ),
                             ),
                           ),
                         )
@@ -202,4 +307,83 @@ class SignUPPage extends StatelessWidget {
       ),
     );
   }
+
+
+  Widget _buildChoiceUser() {
+    //return row of choice chips one with user and other with moderator
+    return Padding(padding: const EdgeInsets.all(10),
+      child: FormField(
+          key: _choiceFieldKey,
+          validator: (value) {
+            if (userType == null) {
+              return 'Please select a user type';
+            }
+            return null;
+          }, builder: (FormFieldState state) {
+        return Container(padding: const EdgeInsets.only(top: 5),
+          child: InputDecorator(decoration: InputDecoration(
+            labelText: 'Choose User Type',
+            errorText: state.errorText,
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10.0),
+            ),
+          ),
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                ChoiceChip(
+                  label: const Text('Student'),
+                  selected: userType == 'student',
+                  onSelected: (selected) {
+                    HapticFeedback.lightImpact();
+                    setState(() {
+                      userType = 'student';
+                    });
+                  },
+                ),
+                ChoiceChip(label: const Text('Admin'),
+                  selected: userType == 'admin',
+                  onSelected: (selected) {
+                    HapticFeedback.lightImpact();
+                    setState(() {
+                      userType = 'admin';
+                    });
+                  },
+                ),
+              ],
+            ),
+          ),);
+      }),);
+  }
+
+  void submit() async {
+    String value = await Auth.signupWithEmail(
+        context, _emailController.text.trim(), _passwordController.text.trim());
+
+    if (value.toString() == 'success') {
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(value),));
+      LocalUser user = LocalUser(
+        name: _nameController.text.trim(),
+        email: _emailController.text.trim(),
+        isStudent: userType == 'student' ? true : false,
+        faculty: 'haha',
+      );
+      await Database.writeUser(user, context);
+      // //set user in provider
+      Provider.of<UserProvider>(context, listen: false).setUser(user);
+      LocalStorage.writeUserToLocalStorage(user);
+      print(Provider.of<UserProvider>(context, listen: false).user!.toString());
+      MaterialPageRoute route = MaterialPageRoute(builder: (context) => const HomePage(), settings: const RouteSettings(name: 'HomePage'));
+      Navigator.pushReplacement(context, route);
+    }
+    else {
+      //show snackbar
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(value),));
+    }
+  }
+
+
 }

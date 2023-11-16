@@ -1,8 +1,21 @@
-import 'package:edu_pulse/models/color_palette.dart';
 import 'package:edu_pulse/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:edu_pulse/screens/auth/sign_up_screen.dart';
 import 'package:edu_pulse/screens/auth/forgot_password_screen.dart';
+import 'package:google_fonts/google_fonts.dart';
+
+import '../../firebase/auth/auth.dart';
+
+const enBorder = OutlineInputBorder(
+  borderRadius:
+  BorderRadius.all(Radius.circular(10)),
+  borderSide: BorderSide(color: Colors.amber)
+);
+
+const myBorder = OutlineInputBorder(
+borderRadius: BorderRadius.all(
+Radius.circular(10))
+);
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -12,11 +25,15 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
+  final _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
+    return  Scaffold(
         resizeToAvoidBottomInset: false,
         backgroundColor: Colors.white,
         body: Container(
@@ -27,23 +44,29 @@ class _LoginScreenState extends State<LoginScreen> {
             Colors.orange[800]!,
             Colors.orange[300]!,
           ])),
-          child: Column(
+          child: Form(
+    key: _formKey,
+    child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               const SizedBox(
                 height: 80,
               ),
-              const Padding(
-                padding: EdgeInsets.all(20),
+              Padding(
+                padding: const EdgeInsets.all(20),
                 child: Column(children: <Widget>[
                   Text(
-                    "Student Survey",
-                    style: TextStyle(color: Colors.white, fontSize: 40),
-                  ),
-                  SizedBox(
+                    "Edu Pulse",
+                    style: GoogleFonts.abel(
+                          color: Colors.white,
+                          fontSize: 40,
+                          fontWeight: FontWeight.bold),
+                ),
+
+                 const  SizedBox(
                     height: 10,
                   ),
-                  Text(
+                  const Text(
                     "Welcome Back",
                     style: TextStyle(color: Colors.white, fontSize: 20),
                   )
@@ -60,14 +83,14 @@ class _LoginScreenState extends State<LoginScreen> {
                           topLeft: Radius.circular(60),
                           topRight: Radius.circular(60))),
                   child: Padding(
-                    padding: EdgeInsets.all(20),
+                    padding: const EdgeInsets.all(20),
                     child: Column(children: <Widget>[
-                      SizedBox(height: 40),
+                      const SizedBox(height: 40),
                       Container(
-                        padding: EdgeInsets.all(20),
+                        padding: const EdgeInsets.all(20),
                         decoration: BoxDecoration(
                             color: Colors.white,
-                            borderRadius: BorderRadius.circular(10),
+                            borderRadius: BorderRadius.circular(20),
                             boxShadow: const [
                               BoxShadow(
                                 color: Color.fromRGBO(225, 95, 27, 0.3),
@@ -76,42 +99,76 @@ class _LoginScreenState extends State<LoginScreen> {
                               )
                             ]),
                         child: Column(children: <Widget>[
-                          Container(
-                            margin: const EdgeInsets.all(10),
-                            child: const TextField(
+                          Padding(
+                            padding: const EdgeInsets.all(10),
+                            child: TextFormField(
                               keyboardType: TextInputType.emailAddress,
-                              decoration: InputDecoration(
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(10)),
-                                  borderSide: BorderSide(color: Colors.amber),
-                                ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(10)),
-                                  borderSide: BorderSide(color: Colors.amber),
-                                ),
+                              textInputAction: TextInputAction.next,
+                              onChanged: (value) {
+                                //print(value);
+
+                                  _emailController.text = value;
+                                  print(_emailController.text);
+
+                              },
+                              onEditingComplete: () {
+                                if (_formKey.currentState!.validate()) {
+                                  FocusScope.of(context).nextFocus();
+                                }
+                              },
+
+                              decoration:const InputDecoration(
+                                focusColor: Colors.amber,
+                                hoverColor: Colors.amber,
+                                border: myBorder,
+                                enabledBorder: enBorder,
                                 labelText: 'Email',
                               ),
+                              validator: (value) {
+                                if (value == null ||
+                                    value.isEmpty ||
+                                    !value.contains('@')) {
+                                  return 'Please enter a valid email';
+                                }
+                                return null;
+                              },
                             ),
                           ),
-                          Container(
-                            margin: const EdgeInsets.all(10),
-                            child: const TextField(
-                              keyboardType: TextInputType.emailAddress,
-                              decoration: InputDecoration(
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(10)),
-                                  borderSide: BorderSide(color: Colors.amber),
-                                ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(10)),
-                                  borderSide: BorderSide(color: Colors.amber),
-                                ),
-                                labelText: 'Password',
+                          Padding(
+                            padding: const EdgeInsets.all(10),
+                            child: TextFormField(
+                              onChanged: (value) {
+                                setState(() {
+                                  _passwordController.text = value;
+                                });
+                              },
+                              obscureText: true,
+                              onEditingComplete: () {
+                                if (_formKey.currentState!.validate()) {
+                                  FocusScope.of(context).nextFocus();
+                                }
+                              },
+                              keyboardType: TextInputType.visiblePassword,
+                              textInputAction: TextInputAction.next,
+                              onFieldSubmitted: (value) {
+                                if (_formKey.currentState!.validate()) {
+                                  FocusScope.of(context).nextFocus();
+                                }
+                              },
+                              decoration: const InputDecoration(
+                                focusColor: Colors.amber,
+                                hoverColor: Colors.amber,
+                                border: myBorder,
+                                enabledBorder: enBorder,
+                                labelText: 'password',
                               ),
+                              validator: (value) {
+                                if (value == null || value.isEmpty ||
+                                    value.length < 6) {
+                                  return 'password must be at least 6 characters long';
+                                }
+                                return null;
+                              },
                             ),
                           ),
                         ]),
@@ -119,9 +176,14 @@ class _LoginScreenState extends State<LoginScreen> {
                       const SizedBox(
                         height: 40,
                       ),
+
                       Row(
-                          crossAxisAlignment: CrossAxisAlignment.end,
+                          //crossAxisAlignment: CrossAxisAlignment.end,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
+                            Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children:[
                             const Text(
                               "Sign-Up?",
                               style: TextStyle(
@@ -135,7 +197,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => SignUPPage()),
+                                      builder: (context) => const SignUPPage()),
                                 );
                               },
                               child: const Text(
@@ -145,9 +207,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ),
                               ),
                             ),
-                            const SizedBox(
-                              width: 100,
-                            ),
+                              ]),
                             GestureDetector(
                               onTap: () {
                                 // Add navigation logic here to go to another page
@@ -159,20 +219,25 @@ class _LoginScreenState extends State<LoginScreen> {
                                           const ForgotPassWord()),
                                 );
                               },
+
                               child: const Text(
                                 "Forgot Password?",
                                 style: TextStyle(
                                     color: Colors.grey,
                                     fontWeight: FontWeight.bold),
                               ),
+                            ),]
                             ),
-                          ]),
+
                       const SizedBox(
                         height: 80,
                       ),
+                      GestureDetector(
+                        onTap: ()=> login(context),
+                        child:
                       Container(
                         height: 50,
-                        margin: EdgeInsets.symmetric(horizontal: 50),
+                        margin: const EdgeInsets.symmetric(horizontal: 50),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(50),
                           gradient: LinearGradient(colors: [
@@ -188,6 +253,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               color: Colors.white, fontWeight: FontWeight.bold),
                         )),
                       ),
+                      ),
                       const SizedBox(
                         height: 50,
                       ),
@@ -197,8 +263,16 @@ class _LoginScreenState extends State<LoginScreen> {
               )
             ],
           ),
+          ),
         ),
-      ),
+
     );
+  }
+
+  void login(BuildContext context) async {
+
+    Auth.signInWithEmail(_emailController.text.trim(), _passwordController.text.trim(), context);
+    // final thing = await Auth.getUID();
+    // print('thing is $thing');
   }
 }

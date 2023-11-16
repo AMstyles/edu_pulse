@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>API_KEY</key>
+	<string>AIzaSyC1FUvR4OwP1oskEgF1N4dDSA5I-mcNFJM</string>
+	<key>GCM_SENDER_ID</key>
+	<string>1054026378414</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.techtitans.eduPulse</string>
+	<key>PROJECT_ID</key>
+	<string>edu-pulse-e9aeb</string>
+	<key>STORAGE_BUCKET</key>
+	<string>edu-pulse-e9aeb.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:1054026378414:ios:1945840a892a85033f913f</string>
+</dict>
+</plist>
