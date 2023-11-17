@@ -46,8 +46,8 @@ class _LoginScreenState extends State<LoginScreen> {
           ])),
           child: Form(
     key: _formKey,
-    child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+    child: ListView(
+            //crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               const SizedBox(
                 height: 80,
