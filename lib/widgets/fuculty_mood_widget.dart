@@ -9,6 +9,7 @@ import 'package:provider/provider.dart';
 
 import '../models/local_user.dart';
 import '../models/mood.dart';
+import '../screens/MoodsDetails.dart';
 
 class FacultyMoodWidget extends StatefulWidget {
   FacultyMoodWidget({Key? key}) : super(key: key);
@@ -129,7 +130,9 @@ class _FacultyMoodWidgetState extends State<FacultyMoodWidget> {
                     children: [
                       TextButton(onPressed: ()=>{}, child: Text('Log your mood', style: GoogleFonts.abel(fontSize: 14, color: Colors.blueGrey),),),
                       if(!Provider.of<UserProvider>(context).user!.isStudent)
-                      TextButton(onPressed: ()=>{}, child: Text('See why', style: GoogleFonts.abel(fontSize: 14, color: Colors.blueGrey),),)
+                      TextButton(onPressed: ()=>{
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>MoodsDetails(moods: snapshot.data!))),
+                      }, child: Text('See why', style: GoogleFonts.abel(fontSize: 14, color: Colors.blueGrey),),)
                     ],
                   )
 

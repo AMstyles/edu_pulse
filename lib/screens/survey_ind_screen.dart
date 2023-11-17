@@ -346,19 +346,22 @@ class _IndivSurveyScreenState extends State<IndivSurveyScreen> {
   }
 
   Widget buildOpenEndedQuestion(Question question) {
-    return  Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(question.text, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-        const SizedBox(height: 10),
-        TextField(
-          onChanged: (value) {
-              userResponses.removeWhere((response) => response['questionId'] == question.questionId);
-              userResponses.add({'questionId': question.questionId, 'textResponse': value, 'type': 'openEnded'});
-          },
-        ),
-        const SizedBox(height: 20),
-      ],
+
+    return StatefulBuilder(builder: (context, setState)=>
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(question.text, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            const SizedBox(height: 10),
+            TextField(
+              onChanged: (value) {
+                userResponses.removeWhere((response) => response['questionId'] == question.questionId);
+                userResponses.add({'questionId': question.questionId, 'textResponse': value, 'type': 'openEnded'});
+              },
+            ),
+            const SizedBox(height: 20),
+          ],
+        )
     );
   }
 

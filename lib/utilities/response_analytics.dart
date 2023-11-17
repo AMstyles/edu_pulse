@@ -78,4 +78,25 @@ class ResponseAnalytics{
    return sections;
  }
 
+  static double getMean(List<Map<String, dynamic>> responses, String questionId){
+    double mean = 0;
+
+    List<double> values = [];
+
+    List< Map<String, dynamic>> questionResponse = getQuestionResponse(responses, questionId);
+    //set for name all the picked options
+
+
+    //populate the sectionNames set
+    for (var response in questionResponse) {
+      values.add(response['rangeResponse']);
+    }
+
+  mean = values.reduce((value, element) => value + element)/values.length;
+
+    print('mean is $mean');
+
+    return mean/5.0;
+  }
+
 }

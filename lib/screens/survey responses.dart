@@ -108,12 +108,14 @@ class _SurveyResponseScreenState extends State<SurveyResponseScreen> {
   }
 
   Widget buildRangeQuestion(Question question, List<Map<String, dynamic>> responses) {
+
+    double mean = ResponseAnalytics.getMean(responses, question.questionId!);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(question.text,style: style,),
         const SizedBox(height: 10,),
-        LinearProgressIndicator(value: 0.75, borderRadius: BorderRadius.circular(15), color: Colors.amber, minHeight: 25, backgroundColor: Colors.amber.withOpacity(0.2) ),
+        LinearProgressIndicator(value: mean, borderRadius: BorderRadius.circular(15), color: Colors.amber, minHeight: 25, backgroundColor: Colors.amber.withOpacity(0.2) ),
         const SizedBox(height: 10,),
         Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
            Text(question.options!.first, style: style,),
