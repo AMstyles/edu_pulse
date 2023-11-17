@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import '../firebase/auth/auth.dart';
 import '../models/local_user.dart';
+import 'local_storage_services.dart';
 
 class UserProvider extends ChangeNotifier{
+
+
   LocalUser? _user = LocalUser(name: 'test', email: 'email@example.com', isStudent: false, faculty: 'test');
 
   Future<LocalUser>? userFuture;
@@ -21,8 +24,9 @@ class UserProvider extends ChangeNotifier{
     notifyListeners();
   }
 
-  void signOut()async {
+  Future<void> signOut()async {
     await Auth.signOut();
+    await LocalStorage.removeUserFromLocalStorage();
   }
 
 }

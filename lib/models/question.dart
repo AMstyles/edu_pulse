@@ -20,4 +20,18 @@ class Question {
       premises: List<String>.from(map['premises'] ?? []),
     );
   }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'text': text,
+      'type': type,
+      'options': options,
+      'premises': premises,
+    };
+  }
+
+  @override
+  String toString() {
+    return 'Question{questionId: $questionId, text: $text, type: $type, options: $options, premises: $premises}';
+  }
 }

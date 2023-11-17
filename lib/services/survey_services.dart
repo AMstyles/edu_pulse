@@ -70,8 +70,27 @@ class SurveyService {
     return Future.value(responses);
   }
 
+ static Future<String> createSurvey(Survey survey)async{
+    try{
+      final docRef = await surveysCollection.add(survey.toMap());
+      return docRef.id;
+    }
+    on FirebaseException catch(e){
+      print(e.message);
+      throw Exception(e.message);
+    }
+ }
 
-
-
+ static Future<void> addQuestionsToSurvey(String surveyId, List<Question> questions)async{
+    try{
+      for(Question question in questions){
+        await FirebaseFirestore.instance.collection('surveys').doc(surveyId).collection('questions').add(question.toMap());
+      }
+    }
+    on FirebaseException catch(e){
+      print(e.message);
+      throw Exception(e.message);
+    }
+ }
 
 }

@@ -204,7 +204,7 @@ class _IndivSurveyScreenState extends State<IndivSurveyScreen> {
     )
     )),
         const SizedBox(height: 10,),
-        GestureDetector(
+        if(Provider.of<UserProvider>(context, listen: false).user!.isStudent)GestureDetector(
             onTap: (){
               setState(() {
                 _currentPart = 1;

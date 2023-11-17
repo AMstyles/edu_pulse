@@ -6,13 +6,15 @@ class Mood{
   DateTime date = DateTime.now();
   String? note;
   double mood;
+  String faculty;
 
-  Mood({required this.mood, this.note});
+  Mood({required this.mood, this.note, required this.faculty});
 
   factory Mood.fromMap(Map<String, dynamic> map) {
     return Mood(
       mood: map['mood'].toDouble(),
       note: map['note'],
+      faculty: map['faculty']??" ",
     );
   }
 
@@ -21,6 +23,7 @@ class Mood{
       'date': date,
       'mood': mood,
       'note': note,
+      'faculty': faculty,
     };
   }
 

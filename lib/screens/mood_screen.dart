@@ -1,4 +1,6 @@
+import 'package:edu_pulse/models/local_user.dart';
 import 'package:edu_pulse/screens/home_screen.dart';
+import 'package:edu_pulse/services/local_storage_services.dart';
 import 'package:edu_pulse/services/mood_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -155,8 +157,20 @@ class _MoodScreenState extends State<MoodScreen> {
   }
 
   void handleSubmission() async {
-    Mood mood = Mood(mood: value, note: _controller.text.trim());
-    await MoodService.addMood(mood, Provider.of<UserProvider>(context, listen: false).user!.email);
+    LocalUser? user =await LocalStorage.readUserFromLocalStorage();
+    String? email ;
+    String? faculty;
+    if (user != null) {
+      email = user.email;
+      faculty = user.faculty;
+    }
+    else{
+      email = null;
+      faculty = null;
+    }
+
+    Mood mood = Mood(mood: value, note: _controller.text.trim(), faculty:faculty?? Provider.of<UserProvider>(context, listen: false).user!.faculty);
+    await MoodService.addMood(mood, email??Provider.of<UserProvider>(context, listen: false).user!.email);
     //play heavy vibration
     HapticFeedback.heavyImpact();
     Navigator.push(context, MaterialPageRoute(builder: (context) => const HomePage()));

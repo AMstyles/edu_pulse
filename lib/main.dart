@@ -1,3 +1,4 @@
+import 'package:edu_pulse/models/local_user.dart';
 import 'package:edu_pulse/screens/auth/login_screen.dart';
 import 'package:edu_pulse/screens/home_screen.dart';
 import 'package:edu_pulse/screens/mood_screen.dart';
@@ -12,18 +13,23 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
-  final myUser = await LocalStorage.readUserFromLocalStorage();
-  bool skip = myUser==null?true:false;
-  runApp(MyApp(skip: skip,));
+  LocalUser? myUser = await LocalStorage.readUserFromLocalStorage();
+
+  bool shouldLogin = myUser == null;
+
+  print(shouldLogin);
+
+  runApp(MyApp(shouldLogin: shouldLogin,));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key, required this.skip});
+   MyApp({super.key, required this.shouldLogin});
 
-  final bool skip;
+  bool shouldLogin;
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+
     return MultiProvider(
         providers: [
         ChangeNotifierProvider(
@@ -37,7 +43,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.lightBlue),
         useMaterial3: true,
       ),
-      home: skip?const LoginScreen():const MoodScreen(),
+      home: shouldLogin?const LoginScreen():const MoodScreen(),
     ),);
   }
 }

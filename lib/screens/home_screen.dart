@@ -1,6 +1,7 @@
 import 'dart:ui';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:edu_pulse/models/color_palette.dart';
+import 'package:edu_pulse/screens/create_survey.dart';
 import 'package:edu_pulse/services/local_storage_services.dart';
 import 'package:edu_pulse/services/local_user_provider.dart';
 import 'package:edu_pulse/widgets/drawer.dart';
@@ -76,7 +77,8 @@ class _HomePageState extends State<HomePage> {
 
 
     return Scaffold(
-
+      floatingActionButton: Provider.of<UserProvider>(context, listen: false).user!.isStudent?null:
+      FloatingActionButton(onPressed: ()=>Navigator.push(context, MaterialPageRoute(builder: (context)=>const CreateSurveyScreen())),child: const FaIcon(FontAwesomeIcons.plus),),
         body:CustomScrollView(
             controller: _scrollController,
             slivers: [

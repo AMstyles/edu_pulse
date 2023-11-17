@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 
 import '../models/color_palette.dart';
 import '../screens/settings_page.dart';
+import '../services/local_storage_services.dart';
 import '../services/local_user_provider.dart';
 
 class DrawerWidget extends StatefulWidget {
@@ -91,9 +92,9 @@ class _DrawerWidgetState extends State<DrawerWidget> {
           ListTile(
             leading: const Icon(Icons.logout, color: Colors.red,),
             title: const Text('log out', style: TextStyle(color: Colors.red),),
-            onTap: () {
+            onTap: () async{
               Navigator.pop(context);
-              Provider.of<UserProvider>(context, listen: false).signOut();
+              await Provider.of<UserProvider>(context, listen: false).signOut();
               Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const LoginScreen()));
             },
           ),

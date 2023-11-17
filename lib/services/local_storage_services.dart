@@ -19,4 +19,9 @@ class LocalStorage{
     return null;
   }
 
+  static Future<void> removeUserFromLocalStorage() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove('current_user');
+  }
+
 }
