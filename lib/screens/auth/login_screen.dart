@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:edu_pulse/screens/auth/sign_up_screen.dart';
 import 'package:edu_pulse/screens/auth/forgot_password_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 import '../../firebase/auth/auth.dart';
 
 const enBorder = OutlineInputBorder(
