@@ -2,11 +2,13 @@ import 'dart:ui';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:edu_pulse/models/color_palette.dart';
 import 'package:edu_pulse/models/survey.dart';
+import 'package:edu_pulse/screens/survey%20responses.dart';
 import 'package:edu_pulse/services/local_user_provider.dart';
 import 'package:edu_pulse/services/survey_services.dart';
 import 'package:edu_pulse/widgets/question%20enclosure.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 import '../models/question.dart';
@@ -99,38 +101,7 @@ class _IndivSurveyScreenState extends State<IndivSurveyScreen> {
             ],
           ),
           ),
-          // BackdropFilter(
-          //   filter: ImageFilter.blur(sigmaX: 0, sigmaY: 1000),
-          //   child: SizedBox(
-          //   height: 3,
-          //   width: double.infinity,
-          //   child: AnimatedAlign(
-          //     alignment: _currentPart==0?Alignment.centerLeft:Alignment.centerRight,
-          //     duration: const Duration(milliseconds: 300),
-          //     child: Container(
-          //       height: 5,
-          //       width: MediaQuery.of(context).size.width/3.5,
-          //       decoration: const BoxDecoration(
-          //         borderRadius: BorderRadius.only(
-          //           topRight: Radius.circular(10),
-          //           bottomRight: Radius.circular(10),
-          //         ),
-          //         color: Color.fromARGB(180, 255, 250, 250),
-          //         //add box shadow to make it glow
-          //         boxShadow: [
-          //           BoxShadow(
-          //             color: ColorPalette.primaryAccent,
-          //             blurRadius: 5,
-          //             spreadRadius: 2,
-          //             offset: Offset(0, 2),
-          //           )
-          //         ]
-          //       ),
-          //
-          //     ),
-          //   ),
-          // ),
-          // ),
+
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
@@ -161,16 +132,105 @@ class _IndivSurveyScreenState extends State<IndivSurveyScreen> {
   //TODO: build overview page
   Widget _buildOverview(){
     return ListView(
+      padding: const EdgeInsets.all(10),
       //write decorated description here
       children: [
         Text(
           widget.survey.description,
-          style: const TextStyle(
+          style: GoogleFonts.abel(
+            color: Colors.blueGrey,
             fontSize: 20,
-            fontWeight: FontWeight.bold
+            fontWeight: FontWeight.normal
           ),
         ),
+
+        //do estimated time here
+        const SizedBox(height: 10,),
+        Text(
+          'Estimated time: 10 minutes',
+          style: GoogleFonts.abel(
+            color: Colors.blueGrey,
+            fontSize: 20,
+            fontWeight: FontWeight.normal
+          ),
+
+         ),
+
+        //put disclaimers and policies here
+        const SizedBox(height: 10,),
+        Text(
+          'Disclaimer: This survey is for research purposes only. Your responses will be kept confidential and will not be shared with anyone. Your participation is voluntary and you may choose not to participate.',
+          style: GoogleFonts.abel(
+            color: Colors.blueGrey,
+            fontSize: 20,
+            fontWeight: FontWeight.normal
+          ),
+        ),
+
+        const SizedBox(height: 10,),
+        Text(
+          'If you\'ve previously completed this survey, only your latest response is kept. You can complete the survey at any time you have different opinions.' ,
+          style: GoogleFonts.abel(
+              color: Colors.redAccent,
+              fontSize: 20,
+              fontWeight: FontWeight.normal
+          ),
+        ),
+
+        //create a button to start the survey using a gesture detector and a container with a gradient
+        const SizedBox(height: 10,),
+        GestureDetector(
+          onTap: (){
+            Navigator.of(context).push(MaterialPageRoute(builder: (context)=>SurveyResponseScreen(survey: widget.survey,)));
+          },
+          child: Container(
+            height: 50,
+            width: double.infinity,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              gradient: const LinearGradient(
+                colors: [
+                  ColorPalette.primary,
+                  ColorPalette.primaryAccent,
        ]
+    ),
+    ),
+                  child: Center(
+    child: Text(
+    'View Responses',
+    style:
+    GoogleFonts.abel(fontSize: 26,color: Colors.white, fontWeight: FontWeight.bold),
+    ),
+    )
+    )),
+        const SizedBox(height: 10,),
+        GestureDetector(
+            onTap: (){
+              setState(() {
+                _currentPart = 1;
+              });
+            },
+            child: Container(
+              height: 50,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  gradient: const LinearGradient(
+                      colors: [
+                        ColorPalette.secondary,
+                        ColorPalette.secondaryAccent,
+                      ]
+                  ),
+                ),
+              child: Center(
+                child: Text(
+                  'Start Survey',
+                  style:
+                  GoogleFonts.abel(fontSize: 26,color: Colors.white, fontWeight: FontWeight.bold),
+                ),
+              )
+            )),
+      ],
     );
   }
 

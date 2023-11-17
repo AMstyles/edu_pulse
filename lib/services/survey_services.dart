@@ -16,7 +16,6 @@ class SurveyService {
 
       final querySnapshot = await FirebaseFirestore.instance.collection('surveys').doc(surveyId).collection('questions').get();
       for (var doc in querySnapshot.docs) {
-
         Question question = Question.fromMap(doc.data());
         question.questionId = doc.id;
         questions.add(question);
@@ -63,15 +62,16 @@ class SurveyService {
   static Future<List<Map<String,dynamic>>> getResponse(String surveyId)async{
     List<Map<String, dynamic>> responses = [];
 
-
       final querySnapshot = await FirebaseFirestore.instance.collection('surveys').doc(surveyId).collection('responses').get();
       for(var doc in querySnapshot.docs){
-        print(doc.data());
         responses.add(doc.data());
       }
 
     return Future.value(responses);
   }
+
+
+
 
 
 }

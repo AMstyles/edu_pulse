@@ -35,29 +35,21 @@ class _FacultyMoodWidgetState extends State<FacultyMoodWidget> {
 
             Row(
               children: [
-               Flexible(child: Image.asset('lib/images/mood_sad.png')),
-                 Flexible(
+               Flexible(flex:1,child: Image.asset('lib/images/mood_sad.png')),
+                 const Flexible(
                   flex: 3,
-                //   child: LinearProgressIndicator(
-                //     semanticsLabel: 'Linear progress indicator',
-                //     minHeight: 20,
-                //     borderRadius: BorderRadius.all(Radius.circular(10)),
-                //     backgroundColor: Colors.greenAccent,
-                //     valueColor: AlwaysStoppedAnimation(Colors.green),
-                //   value: 0.5,
-                //
-                // ),
-                  child: LiquidCircularProgressIndicator(
-                    value: 0.25, // Defaults to 0.5.
-                    valueColor: const AlwaysStoppedAnimation(Colors.pink), // Defaults to the current Theme's accentColor.
-                    backgroundColor: Colors.white, // Defaults to the current Theme's backgroundColor.
-                    borderColor: Colors.red,
-                    borderWidth: 5.0,
-                    direction: Axis.horizontal, // The direction the liquid moves (Axis.vertical = bottom to top, Axis.horizontal = left to right). Defaults to Axis.vertical.
-                    center: const Text("Loading..."),
-                  ),
+                  child: LinearProgressIndicator(
+                    semanticsLabel: 'Linear progress indicator',
+                    minHeight: 20,
+                    borderRadius: BorderRadius.all(Radius.circular(10)),
+                    backgroundColor: Colors.greenAccent,
+                    valueColor: AlwaysStoppedAnimation(Colors.green),
+                  value: 0.5,
+
                 ),
-                Flexible(child: Image.asset('lib/images/mood_happy.png')),
+
+                ),
+                Flexible(flex:1,child: Image.asset('lib/images/mood_happy.png')),
               ],
             ),
 
