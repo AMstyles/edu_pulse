@@ -1,4 +1,5 @@
 import 'package:edu_pulse/models/color_palette.dart';
+import 'package:edu_pulse/screens/survey_ind_screen.dart';
 import 'package:edu_pulse/services/survey_services.dart';
 import 'package:edu_pulse/widgets/drawer.dart';
 import 'package:flutter/material.dart';
@@ -31,7 +32,7 @@ class _SurveyPageState extends State<SurveyPage> {
                 return ListTile(
                   style: ListTileStyle.drawer,
                   onTap: (){
-
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>IndivSurveyScreen(survey: snapshot.data![index],)));
                   },
                   title: Text(snapshot.data![index].title),
                   subtitle: Text(snapshot.data![index].description),

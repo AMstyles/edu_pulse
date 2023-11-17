@@ -7,37 +7,71 @@ class SurveyService {
   FirebaseFirestore.instance.collection('surveys');
 
   static Future<List<Question>> getQuestions(String surveyId) async {
-    QuerySnapshot querySnapshot =
-    await surveysCollection.doc(surveyId).collection('questions').get();
-    return querySnapshot.docs
-        .map((doc) => Question.fromMap(doc.data() as Map<String, dynamic>))
-        .toList();
+
+
+    List<Question> questions = [];
+
+
+    try{
+
+      final querySnapshot = await FirebaseFirestore.instance.collection('surveys').doc(surveyId).collection('questions').get();
+      for (var doc in querySnapshot.docs) {
+
+        Question question = Question.fromMap(doc.data());
+        question.questionId = doc.id;
+        questions.add(question);
+      }
+    }
+    on FirebaseException catch(e){
+      print(e.message);
+    }
+
+    return questions;
   }
 
   static Future<List<Survey>> getSurveys()async{
 
     List<Survey> surveys = [];
     try {
-    print("step 1");
-
-    print("step 2");
-
       final querySnapshot = await FirebaseFirestore.instance.collection(
           'surveys').get();
 
-
-    print("step 3");
     for (var doc in querySnapshot.docs) {
-      print(doc.data());
       Survey survey = Survey.fromMap(doc.data());
       survey.surveyId = doc.id;
       surveys.add(survey);
     }
-    print("step 4");
+
     }on FirebaseException catch(e){
       print(e.message);
     }
     return surveys;
   }
+
+  static Future<void> submitSurvey(String surveyId, List<Map<String, dynamic>> userResponses, String userID) async {
+    try{
+      await FirebaseFirestore.instance.collection('surveys').doc(surveyId).collection('responses').doc(userID).set({
+        'responses': userResponses,
+        'timestamp': DateTime.now(),
+      });
+    }
+    on FirebaseException catch(e){
+      print(e.message);
+    }
+  }
+
+  static Future<List<Map<String,dynamic>>> getResponse(String surveyId)async{
+    List<Map<String, dynamic>> responses = [];
+
+
+      final querySnapshot = await FirebaseFirestore.instance.collection('surveys').doc(surveyId).collection('responses').get();
+      for(var doc in querySnapshot.docs){
+        print(doc.data());
+        responses.add(doc.data());
+      }
+
+    return Future.value(responses);
+  }
+
 
 }

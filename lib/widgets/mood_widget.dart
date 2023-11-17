@@ -2,6 +2,7 @@ import 'package:edu_pulse/services/mood_service.dart';
 import 'package:edu_pulse/utilities/mood_calculator.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../models/mood.dart';
 
@@ -24,7 +25,7 @@ class _MoodWidgetState extends State<MoodWidget> {
               padding: const EdgeInsets.all(10),
                 margin: const EdgeInsets.all(10),
                 width: double.infinity,
-                height: 250,
+                height: 300,
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(10),
@@ -38,21 +39,28 @@ class _MoodWidgetState extends State<MoodWidget> {
                   ]
                 ),
 
-                child:  Stack(
-                  alignment: Alignment.center,
+                child:  Column(
                   children: [
-                   Container(
-                       color: Colors.white,
-                     child: PieChart(
-                        PieChartData(
-                          sections: Mood.toPieChartData(snapshot.data!),
+                    Row(children: [
+                      Text('Average Mood', style: GoogleFonts.abel(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.blueGrey),),
+                    ],)
+,
+                  Expanded(child: Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      Container(
+                        color: Colors.white,
+                        child: PieChart(
+                          PieChartData(
+                            sections: Mood.toPieChartData(snapshot.data!),
+                          ),
                         ),
-                     ),
-                   ),
-                    Image.asset('lib/images/${MoodCalculator.getMoodImage(Mood.getAverageMood(snapshot.data!))}.png', width: 100, height: 100,),
+                      ),
+                      Image.asset('lib/images/${MoodCalculator.getMoodImage(Mood.getAverageMood(snapshot.data!))}.png', width: 100, height: 100,),
 
-                  ],
-                )
+                    ],
+                  ),)
+                ],)
               );
             }
             else{

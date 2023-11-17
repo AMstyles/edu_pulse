@@ -28,6 +28,7 @@ class _SignUpPageState extends State<SignUPPage> {
   final _choiceFieldKey = GlobalKey<FormFieldState>();
 
   String? userType;
+  String? faculty;
 
   late TextEditingController _nameController;
   late TextEditingController _emailController;
@@ -261,6 +262,10 @@ class _SignUpPageState extends State<SignUPPage> {
                         const SizedBox(
                           height: 7,
                         ),
+                        _buildDropDownMenuFaculty(),
+                        const SizedBox(
+                          height: 7,
+                        ),
                         GestureDetector(
                           onTap: () {
                             _formKey.currentState!.validate()? submit(): null;
@@ -368,7 +373,7 @@ class _SignUpPageState extends State<SignUPPage> {
         name: _nameController.text.trim(),
         email: _emailController.text.trim(),
         isStudent: userType == 'student' ? true : false,
-        faculty: 'haha',
+        faculty: faculty ?? 'other',
       );
       await Database.writeUser(user, context);
       // //set user in provider
@@ -385,5 +390,53 @@ class _SignUpPageState extends State<SignUPPage> {
     }
   }
 
+
+
+  Widget _buildDropDownMenuFaculty() {
+    return Padding(
+      padding: const EdgeInsets.all(10),
+    child: DropdownButtonFormField(
+      validator: (value) {
+        if (faculty == null) {
+          return 'Please select a faculty';
+        }
+        return null;
+      },
+      decoration: const InputDecoration(
+        focusColor: Colors.amber,
+        hoverColor: Colors.amber,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(10)),
+        ),
+        labelText: 'Faculty',
+      ),
+      items: const [
+        DropdownMenuItem(
+          value: 'Science',
+          child: Text('Science'),
+        ),
+        DropdownMenuItem(
+          value: 'Engineering',
+          child: Text('Engineering'),
+        ),
+        DropdownMenuItem(
+          value: 'Health Sciences',
+          child: Text('Health Sciences'),
+        ),
+        DropdownMenuItem(
+          value: 'Humanities',
+          child: Text('Humanities'),
+        ),
+        DropdownMenuItem(
+          value: 'Commerce, Law & Management',
+          child: Text('Commerce, Law & Management'),
+        ),
+      ],
+      onChanged: (value) {
+        faculty = value ?? 'other';
+      },
+    ),
+    );
+  }
 
 }

@@ -87,7 +87,6 @@ class _UserPageState extends State<UserPage> {
                 Padding(padding: const EdgeInsets.all(10), child: Text('Mood Log', style: GoogleFonts.abel(fontWeight: FontWeight.bold, fontSize: 28, color: ColorPalette.primary),),),
                  SizedBox(
                   height: 400,
-
                     child: HeatMapCalendar(
                       colorTipHelper: [
                         Text('sad', style: GoogleFonts.abel(color: Colors.black),),

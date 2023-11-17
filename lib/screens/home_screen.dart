@@ -4,11 +4,14 @@ import 'package:edu_pulse/models/color_palette.dart';
 import 'package:edu_pulse/services/local_storage_services.dart';
 import 'package:edu_pulse/services/local_user_provider.dart';
 import 'package:edu_pulse/widgets/drawer.dart';
+import 'package:edu_pulse/widgets/home_widgets_enclosure.dart';
+import 'package:edu_pulse/widgets/mood_log_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
+import '../widgets/fuculty_mood_widget.dart';
 import '../widgets/homeUserWidget.dart';
 import '../widgets/mood_widget.dart';
 
@@ -129,6 +132,9 @@ class _HomePageState extends State<HomePage> {
 
               //todo: add mood widget
               const MoodWidget(),
+              FacultyMoodWidget(),
+              MoodLogWidget(),
+              const SliverToBoxAdapter(child:SizedBox(height: 300,)),
       ],
         ),
 
