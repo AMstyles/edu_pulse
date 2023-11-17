@@ -33,7 +33,6 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
-        resizeToAvoidBottomInset: false,
         backgroundColor: Colors.white,
         body: Container(
           width: double.infinity,
@@ -45,8 +44,8 @@ class _LoginScreenState extends State<LoginScreen> {
           ])),
           child: Form(
     key: _formKey,
-    child: ListView(
-            //crossAxisAlignment: CrossAxisAlignment.start,
+    child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               const SizedBox(
                 height: 80,
@@ -74,8 +73,7 @@ class _LoginScreenState extends State<LoginScreen> {
               const SizedBox(
                 height: 20,
               ),
-              Expanded(
-                child: Container(
+              Expanded(child: Container(
                   decoration: const BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.only(
@@ -83,7 +81,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           topRight: Radius.circular(60))),
                   child: Padding(
                     padding: const EdgeInsets.all(20),
-                    child: Column(children: <Widget>[
+                    child: ListView(children: <Widget>[
                       const SizedBox(height: 40),
                       Container(
                         padding: const EdgeInsets.all(20),
@@ -111,9 +109,10 @@ class _LoginScreenState extends State<LoginScreen> {
 
                               },
                               onEditingComplete: () {
-                                if (_formKey.currentState!.validate()) {
-                                  FocusScope.of(context).nextFocus();
-                                }
+                                // if (_formKey.currentState!.validate()) {
+                                //   FocusScope.of(context).nextFocus();
+                                // }
+                                FocusScope.of(context).nextFocus();
                               },
 
                               decoration:const InputDecoration(
@@ -148,11 +147,12 @@ class _LoginScreenState extends State<LoginScreen> {
                                 }
                               },
                               keyboardType: TextInputType.visiblePassword,
-                              textInputAction: TextInputAction.next,
+                              textInputAction: TextInputAction.done,
                               onFieldSubmitted: (value) {
-                                if (_formKey.currentState!.validate()) {
-                                  FocusScope.of(context).nextFocus();
-                                }
+                                // if (_formKey.currentState!.validate()) {
+                                //   FocusScope.of(context).nextFocus();
+                                // }
+                                FocusScope.of(context).nextFocus();
                               },
                               decoration: const InputDecoration(
                                 focusColor: Colors.amber,
@@ -258,8 +258,9 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ]),
                   ),
-                ),
-              )
+
+              ),
+              ),
             ],
           ),
           ),
