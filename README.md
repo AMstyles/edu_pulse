@@ -1,4 +1,4 @@
-[![CircleCI](https://dl.circleci.com/status-badge/img/gh/AMstyles/Wits-Overflow/tree/master.svg?style=shield&circle-token=7d0fe5ee90ed5be0dea6956d6c9c1a8ce03fb22d)](https://dl.circleci.com/status-badge/redirect/gh/AMstyles/Wits-Overflow/tree/master)
+-[![CircleCI](https://dl.circleci.com/status-badge/img/gh/AMstyles/Wits-Overflow/tree/master.svg?style=shield&circle-token=7d0fe5ee90ed5be0dea6956d6c9c1a8ce03fb22d)](https://dl.circleci.com/status-badge/redirect/gh/AMstyles/Wits-Overflow/tree/master)
 
 [![codecov](https://codecov.io/gh/AMstyles/Wits-Overflow/branch/Arinaho_s2/graph/badge.svg?token=N5L8UD4VU6)](https://codecov.io/gh/AMstyles/Wits-Overflow)
 
